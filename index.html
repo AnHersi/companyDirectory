@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="https://api.iconify.design/icon-park/every-user.svg">
+        <link rel="stylesheet" href="libs/assets/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="libs/css/style.css">
+        <title>Company Directory</title>
+    </head>
+    <body>
+        <div id="preloader"></div>
+        <div id="header" class="d-flex flex-column justify-content-between">
+            <div id="history-search-filter-container" class="d-flex flex-row justify-content-between mt-3 mx-2 mx-md-3 mx-lg-4 mx-xlg-5">
+                <button id="view-history" class="default-button">View history</button>
+                <div id="search-filter-container" class="d-flex flex-row justify-content-end">
+                    <div id="search-input-container" class="d-flex flex-row justify-content-around align-items-center px-2">
+                        <iconify-icon id="search-icon" icon="material-symbols:search-rounded"></iconify-icon>
+                        <input type="text" id="search-input" name="search" placeholder="Search..">
+                    </div>
+                </div>
+            </div>
+            <div id="title-sort-add-container" class="d-flex flex-row justify-content-between align-items-center mx-2 mx-md-3 mx-lg-4 mx-xlg-5">
+                <h1 id="title">All entries</h1>
+                <div id="sort-add-container" class="d-flex flex-row justify-content-end align-items-center">
+                    <div id="sort-select-container" class="d-flex flex-row justify-content-around align-items-center">
+                        <span id="sort-span">Sort by: </span>
+                        <select id="sort-select">
+                            <option value="surname">Surname</option>
+                            <option value="first-name">First name</option>
+                            <option value="email">Email</option>
+                            <option value="department">Department</option>
+                            <option value="location">Location</option>
+                        </select>
+                    </div>
+                    <button id="add-button">&plus;</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal edit-modal" tabindex="-1" role="dialog" data-bs-backdrop="false" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content shadow d-flex flex-column align-items-center">
+                <div class="modal-header">
+                  <h5 class="modal-title">Edit user</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-user-form" class="d-flex flex-column align-items-center">
+                        <div class="modal-body">
+                            <input id="employeeID" type="hidden">
+                            <div class="form-floating mb-3">
+                                <input id="edit-first-name" type="text" class="form-control first-name" placeholder="First name" required>
+                                <label for="edit-first-name" class="filter-drop-item">First name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control surname" placeholder="Last name" required>
+                                <label for="edit-surname" class="filter-drop-item">Surname</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control email" placeholder="Email address" required>
+                                <label for="edit-email" class="filter-drop-item">Email address</label>
+                            </div> 
+                            <select class="department-select w-100 department mb-3 custom-select pt-1 pb-1"></select>
+                            <button type="submit" class="default-button mt-3 mb-2 edit-submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+          <div class="modal add-user-modal" tabindex="-1" role="dialog" data-bs-backdrop="false" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content shadow d-flex flex-column align-items-center">
+                <div class="modal-header">
+                  <h5 class="modal-title">Add Person</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-user-form" class="d-flex flex-column align-items-center">
+                        <div class="modal-body">
+                            <input id="employeeID" type="hidden">
+                            <div class="form-floating mb-3">
+                                <input id="edit-first-name" type="text" class="form-control first-name" placeholder="First name" required>
+                                <label for="edit-first-name" class="filter-drop-item">First name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control surname" placeholder="Last name" required>
+                                <label for="edit-surname" class="filter-drop-item">Surname</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control email" placeholder="Email address" required>
+                                <label for="edit-email" class="filter-drop-item">Email address</label>
+                            </div> 
+                            <select class="department-select w-100 department mb-3 custom-select pt-1 pb-1"></select>
+                            <button type="submit" class="default-button mt-3 mb-2 edit-submit">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal add-department-modal" tabindex="-1" role="dialog" data-bs-backdrop="false" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content shadow d-flex flex-column align-items-center">
+                <div class="modal-header">
+                  <h5 class="modal-title">Add department</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-department-form" class="d-flex flex-column align-items-center">
+                        <div class="modal-body">
+                            <input id="employeeID" type="hidden">
+                            <div class="form-floating mb-3">
+                                <input id="edit-department" type="text" class="form-control department" placeholder="Department" required>
+                                <label for="edit-department" class="filter-drop-item">Department</label>
+                            </div>
+                            <select class="location-select w-100 location pt-1 pb-1 mb-3"></select>
+                            <button type="submit" class="default-button mt-3 mb-2 edit-submit">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal add-location-modal" tabindex="-1" role="dialog" data-bs-backdrop="false" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content shadow d-flex flex-column align-items-center">
+                <div class="modal-header">
+                  <h5 class="modal-title">Add location</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-location-form" class="d-flex flex-column align-items-center">
+                        <div class="modal-body">
+                            <input id="employeeID" type="hidden">
+                            <div class="form-floating mb-3">
+                                <input id="edit-department" type="text" class="form-control location" placeholder="Location" required>
+                                <label for="edit-location" class="filter-drop-item">Location</label>
+                            </div>
+                            <button type="submit" class="default-button mt-3 mb-2 edit-submit">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal history-modal" tabindex="-1" role="dialog" data-bs-backdrop="false" data-bs-keyboard="false">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+              <div class="modal-content shadow d-flex flex-column align-items-center">
+                <div class="modal-header">
+                  <h5 class="modal-title">View history</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">Action</th>
+                            <th scope="col">Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal remove-modal" tabindex="-1" role="dialog" data-bs-backdrop="false" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content shadow">
+                <div class="modal-body p-5 w-100">
+                    <div class="icon-message-container d-flex flex-row align-items-center justify-content-around mb-5">
+                        <iconify-icon class="bin-icon" icon="mdi:trash"></iconify-icon>
+                        <div class="d-flex flex-column align-items-center">
+                            <span class="main-message mb-2"></span>
+                            <span class="sub-message">This user will be deleted immediately. This action can't be undone</span>
+                        </div>
+                    </div>
+                    <div class="remove-cancel-buttons">
+                        <button class="cancel-button default-button">Cancel</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header d-flex flex-row justify-content-end" style="border-bottom: 1px solid #fff">
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body" style="font-size: 1.1em; font-weight: 500; position: relative; top: -10px;">
+              </div>
+            </div>
+          </div>
+          <div class="modal edit-department-modal" tabindex="-1" role="dialog" data-bs-backdrop="false" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content shadow d-flex flex-column align-items-center">
+                <div class="modal-header">
+                  <h5 class="modal-title">Edit department</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-department-form" class="d-flex flex-column align-items-center">
+                        <div class="modal-body">
+                            <input id="employeeID" type="hidden">
+                            <div class="form-floating mb-3">
+                                <input id="edit-department" type="text" class="form-control department" placeholder="Department" required>
+                                <label for="edit-department" class="filter-drop-item">Department</label>
+                            </div>
+                            <select class="location-select w-100 location pt-1 pb-1 mb-3"></select>
+                            <button type="submit" class="default-button mt-3 mb-2 edit-submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal edit-location-modal" tabindex="-1" role="dialog" data-bs-backdrop="false" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content shadow d-flex flex-column align-items-center">
+                <div class="modal-header">
+                  <h5 class="modal-title">Edit location</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-location-form" class="d-flex flex-column align-items-center">
+                        <div class="modal-body">
+                            <input id="employeeID" type="hidden">
+                            <div class="form-floating mb-3">
+                                <input id="edit-department" type="text" class="form-control location" placeholder="Location" required>
+                                <label for="edit-location" class="filter-drop-item">Location</label>
+                            </div>
+                            <button type="submit" class="default-button mt-3 mb-2 edit-submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal department-remove-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-body p-5 w-100">
+                    <div class="icon-message-container d-flex flex-row align-items-center justify-content-around mb-5">
+                        <iconify-icon class="bin-icon" icon="mdi:trash"></iconify-icon>
+                        <div class="d-flex flex-column align-items-center">
+                            <span class="main-message mb-2"></span>
+                            <span class="sub-message">This user will be deleted immediately. This action can't be undone</span>
+                        </div>
+                    </div>
+                    <div class="remove-cancel-buttons">
+                        <button class="cancel-button default-button">Cancel</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal location-remove-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-body p-5 w-100">
+                    <div class="icon-message-container d-flex flex-row align-items-center justify-content-around mb-5">
+                        <iconify-icon class="bin-icon" icon="mdi:trash"></iconify-icon>
+                        <div class="d-flex flex-column align-items-center">
+                            <span class="main-message mb-2"></span>
+                            <span class="sub-message">This user will be deleted immediately. This action can't be undone</span>
+                        </div>
+                    </div>
+                    <div class="remove-cancel-buttons">
+                        <button class="cancel-button default-button">Cancel</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <script type="application/javascript" src="libs/js/jquery-3.6.1.min.js" defer></script>
+        <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js" defer></script>
+        <script src="libs/assets/bootstrap-4.3.1-dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous" defer></script>
+        <script src="libs/js/script.js" defer></script>
+    </body>
+</html>
